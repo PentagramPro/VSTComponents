@@ -21,3 +21,7 @@
  END_JUCE_MODULE_DECLARATION
 
 *******************************************************************************/
+#include "OwlDSP/CMultiChannelIir.h"
+#include "OwlDSP/DSPDelay.h"
+#include "OwlDSP/DSPIntegration.h"
+#include "OwlDSP/DSPLowpassFilter2.h"
