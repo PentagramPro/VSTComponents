@@ -6,8 +6,8 @@
 #include "OwlDSP/DSPLowpassFilter2.cpp"
 
 #include "Owl/AudioQueue.cpp"
-#include "Owl/ListenerRegistry.cpp"
 #include "Owl/ProperiesRegistry.cpp"
 #include "Owl/SynthState.cpp"
 #include "Owl/Toolbox.cpp"
 #include "Owl/VoiceModuleBase.cpp"
+#include "Owl/VoiceModuleHost.cpp"

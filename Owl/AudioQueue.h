@@ -15,7 +15,7 @@ public:
 	void SetLength(double lengthSeconds);
 
 private:
-	AudioSampleBuffer mBuffer;
+	juce::AudioSampleBuffer mBuffer;
 	int mCurrentSample = 0;
 	int mSampleRate = 0;
 	int mChannels = 0;

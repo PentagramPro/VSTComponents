@@ -1,7 +1,7 @@
 #pragma once
 #include "JuceHeader.h"
 
-struct CVoiceModuleHostSound : public SynthesiserSound
+struct CVoiceModuleHostSound : public juce::SynthesiserSound
 {
     CVoiceModuleHostSound() {}
     bool appliesToNote(int) override { return true; }

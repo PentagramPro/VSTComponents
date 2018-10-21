@@ -6,7 +6,7 @@
 
 class CPropertiesRegistry;
 
-class CVoiceModuleHost : public SynthesiserVoice, public IVoiceModuleHost {
+class CVoiceModuleHost : public juce::SynthesiserVoice, public IVoiceModuleHost {
 public:
     CVoiceModuleHost(CPropertiesRegistry& propRegistry);
     void AddModule(IVoiceModule* module);
@@ -16,17 +16,17 @@ public:
 		return *module;
 	}
 
-    bool canPlaySound(SynthesiserSound* sound) override;
+    bool canPlaySound(juce::SynthesiserSound* sound) override;
 
     void startNote(int midiNoteNumber, float velocity,
-            SynthesiserSound* sound, int currentPitchWheelPosition) override;
+		juce::SynthesiserSound* sound, int currentPitchWheelPosition) override;
 
     void stopNote(float velocity, bool allowTailOff) override;
 
     void pitchWheelMoved(int newPitchWheelValue) override;
     void controllerMoved(int controllerNumber, int newControllerValue) override;
 
-    void renderNextBlock(AudioSampleBuffer& outputBuffer, int startSample, int numSamples) override;
+    void renderNextBlock(juce::AudioSampleBuffer& outputBuffer, int startSample, int numSamples) override;
 
 
     double GetSampleRate() const override;
