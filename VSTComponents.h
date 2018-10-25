@@ -37,3 +37,11 @@
 #include "Owl/VoiceModuleBase.h"
 #include "Owl/VoiceModuleHost.h"
 #include "Owl/VoiceModuleHostSound.h"
+
+#include "OwlUI/IGuiListener.h"
+#include "OwlUI/IIndicator.h"
+
+#include "PresetBrowser/IPresetBrowserListeners.h"
+#include "PresetBrowser/PresetBrowser.h"
+#include "PresetBrowser/PresetBrowserImpl.h"
+#include "PresetBrowser/PresetItemAdapter.h"

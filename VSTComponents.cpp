@@ -11,3 +11,7 @@
 #include "Owl/Toolbox.cpp"
 #include "Owl/VoiceModuleBase.cpp"
 #include "Owl/VoiceModuleHost.cpp"
+
+#include "PresetBrowser/PresetBrowser.cpp"
+#include "PresetBrowser/PresetBrowserImpl.cpp"
+#include "PresetBrowser/PresetItemAdapter.cpp"
