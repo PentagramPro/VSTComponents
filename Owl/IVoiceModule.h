@@ -11,6 +11,6 @@ public:
     virtual void OnNoteStart(int midiNoteNumber, float velocity,
 		juce::SynthesiserSound* sound, int currentPitchWheelPosition) = 0;
     virtual void OnNoteStop(float velocity, bool allowTailOff) = 0;
-    virtual void ProcessBlock(juce::AudioSampleBuffer& outputBuffer, int startSample, int numSamples) = 0;
+    virtual void ProcessBlockOfSound(juce::AudioSampleBuffer& outputBuffer, int startSample, int numSamples) = 0;
 	virtual bool IsBusy() const = 0;
 };

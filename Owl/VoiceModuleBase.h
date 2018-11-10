@@ -9,17 +9,27 @@ public:
 	virtual ~CVoiceModuleBase() {}
 
 	const std::string& GetName() const override { return mName; }
-	virtual bool IsBusy() const override { return mIsBusy; }
+	virtual bool IsBusy() const override { return  mIsBusy; }
 
 	void ReplaceHost(IVoiceModuleHost& host) { mHost = &host; }
+	void ProcessBlockOfSound(juce::AudioSampleBuffer& outputBuffer, int startSample, int numSamples) override final;
+
+	using MutePredicate = std::function<bool(const IVoiceModule& m)>;
+	void AddMuteRule(MutePredicate predicate);
+	bool IsMute() const;
+
 protected:
+	virtual void ProcessBlock(juce::AudioSampleBuffer& outputBuffer, int startSample, int numSamples) = 0;
 	double GetSampleRate() const;
 	std::string GetPropName(const std::string& propertyName) const;
 	void StartSound();
 	void StopSound();
 
 private:
+	std::vector<MutePredicate> mMuteRules;
+
 	IVoiceModuleHost * mHost;
 	const std::string mName;
 	bool mIsBusy = false;
+	
 };

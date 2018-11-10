@@ -21,3 +21,26 @@ std::string CVoiceModuleBase::GetPropName(const std::string & propertyName) cons
 	  mIsBusy = false;
 	  mHost->SoundEnded();
   }
+
+  void CVoiceModuleBase::AddMuteRule(MutePredicate predicate)
+  {
+	  mMuteRules.push_back(predicate);
+  }
+
+  bool CVoiceModuleBase::IsMute() const
+  {
+	  for (auto& rule : mMuteRules) {
+		  if (rule(*this)) {
+			  return true;
+		  }
+	  }
+	  return false;
+  }
+
+  void CVoiceModuleBase::ProcessBlockOfSound(juce::AudioSampleBuffer & outputBuffer, int startSample, int numSamples)
+  {
+	  if (IsMute()) {
+		  return;
+	  }
+	  ProcessBlock(outputBuffer, startSample, numSamples);
+  }
