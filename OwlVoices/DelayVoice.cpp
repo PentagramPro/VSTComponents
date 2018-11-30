@@ -40,7 +40,7 @@ void CDelayVoice::ProcessBlock(AudioSampleBuffer & outputBuffer, int startSample
 	}
 
 	const int channels = outputBuffer.getNumChannels();
-	const double dry = 1 - mWet;
+
 	const double feedbackDry = 1 - mFeedback;
 	while (--samplesCount >= 0) {
 

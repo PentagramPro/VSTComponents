@@ -8,6 +8,7 @@ class CPresetItemAdapter;
 
 class IPresetItemListener {
 public:
+	virtual ~IPresetItemListener() {}
 	virtual void OnItemSelected(CPresetItemAdapter& adapter, int index) = 0;
 };
 

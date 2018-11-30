@@ -7,7 +7,7 @@ class EnvelopeVoice  : public CVoiceModuleBase {
 public:
 	EnvelopeVoice(const std::string& name, IVoiceModuleHost& host) : CVoiceModuleBase(name, host) {}
 
-	void InitProperties(CPropertiesRegistry& registry);
+	void InitProperties(CPropertiesRegistry& registry) override;
     void OnNoteStart(int midiNoteNumber, float velocity, SynthesiserSound *sound, int currentPitchWheelPosition) override;
 	
     void OnNoteStop(float velocity, bool allowTailOff) override;

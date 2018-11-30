@@ -11,6 +11,7 @@ class CSynthState;
 
 class IPropertyRecord {
 public:
+	virtual ~IPropertyRecord() {}
 	virtual void SetReference(float value) = 0;
 	virtual float GetFromReference() = 0;
 	virtual void SetRaw(double value) = 0;
@@ -23,8 +24,8 @@ protected:
 	CPropertyRecord(T& reference, T min, T max) : mReference(reference), mMinValue(min), mMaxValue(max) {}
 
 	T & mReference;
-	T mMaxValue;
 	T mMinValue;
+	T mMaxValue;
 
 };
 
@@ -129,6 +130,7 @@ private:
 
 class IPropertiesRegistryListener {
 public:
+	virtual ~IPropertiesRegistryListener() {}
 	virtual void OnPropertiesFromSynthState() = 0;
 };
 

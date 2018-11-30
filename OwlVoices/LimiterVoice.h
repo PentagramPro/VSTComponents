@@ -7,7 +7,7 @@ class CLimiterVoice : public CVoiceModuleBase {
 public:
 	CLimiterVoice(const std::string& name, IVoiceModuleHost& host, double preVolume);
 
-	void InitProperties(CPropertiesRegistry& registry);
+	void InitProperties(CPropertiesRegistry& registry) override;
 	void OnNoteStart(int midiNoteNumber, float velocity, SynthesiserSound *sound, int currentPitchWheelPosition) override {};
 
 	void OnNoteStop(float velocity, bool allowTailOff) override {};

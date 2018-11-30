@@ -76,7 +76,7 @@ CLfoOscillatorVoice::CLfoOscillatorVoice(const std::string& name, IVoiceModuleHo
   {
 	  registry.AddProperty(GetPropName("Frequency"), new CPropertySquareDouble01(mFrequency, 0.1, 5.0));
 	  registry.AddProperty(GetPropName("Volume"), new CPropertySquareDouble01(mVolume, 0, 1));
-	  registry.AddProperty(GetPropName("Waveform"), new CPropertyInt(mWaveformRaw, 1, mWaveformMapping.size()));
+	  registry.AddProperty(GetPropName("Waveform"), new CPropertyInt(mWaveformRaw, 1, static_cast<int>(mWaveformMapping.size())));
   }
 
   void CLfoOscillatorVoice::UpdateFrequency()

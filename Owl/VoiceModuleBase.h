@@ -28,8 +28,8 @@ protected:
 private:
 	std::vector<MutePredicate> mMuteRules;
 
-	IVoiceModuleHost * mHost;
 	const std::string mName;
+	IVoiceModuleHost * mHost;
 	bool mIsBusy = false;
 	
 };

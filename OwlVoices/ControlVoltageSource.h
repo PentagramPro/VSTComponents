@@ -21,7 +21,7 @@ class CControlVoltageSource : public CVoiceModuleBase, public IVoltageController
 public:
 	CControlVoltageSource(const std::string& name, IVoiceModuleHost& host, std::shared_ptr<CVoiceModuleBase> wrappedVoice, double initialValue);
 	virtual ~CControlVoltageSource();
-	void InitProperties(CPropertiesRegistry& registry);
+	void InitProperties(CPropertiesRegistry& registry) override;
 	void OnNoteStart(int midiNoteNumber, float velocity, SynthesiserSound *sound, int currentPitchWheelPosition) override;
 
 	void OnNoteStop(float velocity, bool allowTailOff) override;
