@@ -4,7 +4,7 @@
 CSawtoothVoice::CSawtoothVoice(const std::string & name, IVoiceModuleHost & host, double detuneScale) : CVoiceModuleBase(name,host)
 , mDetuneScale(detuneScale)
 {
-	mDelay.Reset(GetSampleRate(), 0.005);
+	mDelay.Reset(GetSampleRate(), mPortamento);
 }
 
 void CSawtoothVoice::SetSamplesPerCycle(int samples)
@@ -40,6 +40,7 @@ void CSawtoothVoice::ProcessBlock(AudioSampleBuffer & outputBuffer, int startSam
 		return;
 	}
 
+	mDelay.SetTransferTime(mPortamento);
 	while (--samplesCount >= 0) {
 		mSampleCounter++;
 		if (mSampleCounter >= mCurrentSamplesPerCycle) {
@@ -64,4 +65,5 @@ void CSawtoothVoice::ProcessBlock(AudioSampleBuffer & outputBuffer, int startSam
 void CSawtoothVoice::InitProperties(CPropertiesRegistry & registry)
 {
 	registry.AddProperty(GetPropName("Detune"), new CPropertyDouble01(mDetune, 1,1.02));
+	registry.AddProperty(GetPropName("Portamento"), new CPropertyDouble01(mPortamento, 0.003,0.5));
 }

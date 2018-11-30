@@ -4,7 +4,7 @@
 void CDSPDelay::Reset(double sampleRate, double transferTime, double startValue)
   {
 	mRate = 1 / sampleRate;
-	mT = -std::log(0.01) / transferTime;
+      SetTransferTime(transferTime);
 	mLast = 0;
   }
 
@@ -13,3 +13,7 @@ void CDSPDelay::Reset(double sampleRate, double transferTime, double startValue)
 	  mLast = (1 - mT * mRate)*mLast + mT * mRate*input;
 	  return mLast;
   }
+
+void CDSPDelay::SetTransferTime(double transferTime) {
+    mT = -std::log(0.01) / transferTime;
+}

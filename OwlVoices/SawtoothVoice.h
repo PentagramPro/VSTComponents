@@ -26,6 +26,7 @@ private:
 	double mNextSamplesPerCycle = 0;
 	double mSampleCounter = 0;
 	double mDetune = 1;
+	double mPortamento = 0.005;
 	const double mDetuneScale = 1;
 	CDSPDelay mDelay;
 
