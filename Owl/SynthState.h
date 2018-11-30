@@ -18,6 +18,7 @@ public:
 
 	void AddKeyValue(const std::string& key, double value);
 	const std::unordered_map<std::string, double>& GetState() const { return mState; }
+	const StateInfo& GetStateInfo() const {return mStateInfo; }
 
 	static StateInfo GetStateInfoFromData(const char* data, int size);
 private:
