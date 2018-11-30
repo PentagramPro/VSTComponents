@@ -16,10 +16,15 @@ public:
 	virtual float GetFromReference() = 0;
 	virtual void SetRaw(double value) = 0;
 	virtual double GetRaw() const = 0;
+	virtual void SetMinValue() = 0;
 };
 
 template<typename T>
 class CPropertyRecord : public IPropertyRecord {
+public:
+	void SetMinValue() override{
+		mReference = mMinValue;
+	}
 protected:
 	CPropertyRecord(T& reference, T min, T max) : mReference(reference), mMinValue(min), mMaxValue(max) {}
 
@@ -118,7 +123,13 @@ public:
 			item->SetRaw(value);
 		}
 	}
-	virtual double GetRaw() const {
+
+	void SetMinValue() {
+        for (auto& item : mProperties) {
+            item->SetMinValue();
+        }
+	}
+ 	virtual double GetRaw() const {
 		return mProperties.front()->GetRaw();
 	}
 

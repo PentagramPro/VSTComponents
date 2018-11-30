@@ -45,6 +45,11 @@ void CPropertiesRegistry::ForceProperty(const std::string & name, float value)
 
 void CPropertiesRegistry::FromSynthState(const CSynthState & state)
 {
+	for(auto& property: mProperties) {
+		CPropertiesList& propertiesList = *property.second.get();
+		propertiesList.SetMinValue();
+	}
+
 	for (const auto& record : state.GetState()) {
 		auto p = mProperties.find(record.first);
 		if (p != mProperties.end()) {
