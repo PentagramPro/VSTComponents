@@ -22,20 +22,20 @@ public:
 
 private:
 
-	template<class T>
+	template<class L>
 	class CListenerHandleSpec  {
 	public:
 		CListenerHandleSpec() {}
-		CListenerHandleSpec(T& listener, std::weak_ptr<CListenerHandle> self) : mListener(&listener), mSelf(self) {}
+		CListenerHandleSpec(L& listener, std::weak_ptr<CListenerHandle> self) : mListener(&listener), mSelf(self) {}
 		virtual ~CListenerHandleSpec() {}
 		
-		T* operator->() {
+		L* operator->() {
 			return mListener;
 		}
 		
 		bool IsExpired() const { return mSelf.expired(); }
 	private:
-		T * mListener;
+		L * mListener;
 		std::weak_ptr<CListenerHandle> mSelf;
 		
 	};

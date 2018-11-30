@@ -1,6 +1,6 @@
 #include "CMultiChannelIir.h"
 
-CMultiChannelIir::CMultiChannelIir(juce::IIRCoefficients & coefficients)
+CMultiChannelIir::CMultiChannelIir(const juce::IIRCoefficients & coefficients)
 {
 	mIirFilters.emplace_back();
 	mIirFilters.back().setCoefficients(coefficients);
