@@ -5,8 +5,8 @@
 #include <string>
 
 struct StateInfo {
-	std::string category;
-	std::string name;
+	std::string category = "Default";
+	std::string name = "Default";
 };
 
 class CSynthState {
