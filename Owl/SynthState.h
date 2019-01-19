@@ -21,6 +21,7 @@ public:
 	const StateInfo& GetStateInfo() const {return mStateInfo; }
 
 	static StateInfo GetStateInfoFromData(const char* data, int size);
+	void SetNameAndCategory(const std::string& name, const std::string& category);
 private:
 	
 	std::unordered_map<std::string, double> mState;

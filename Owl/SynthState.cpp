@@ -83,3 +83,9 @@ StateInfo CSynthState::GetStateInfoFromData(const char * data, int size)
 	
 	return res;
 }
+
+void CSynthState::SetNameAndCategory(const std::string & name, const std::string & category)
+{
+	mStateInfo.name = name;
+	mStateInfo.category = category;
+}
