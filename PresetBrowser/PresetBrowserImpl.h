@@ -14,7 +14,7 @@ class CPresetBrowserImpl : public PresetBrowser, public IPresetItemListener, pub
 
 	  void paint(Graphics& g) override;
 
-
+	  void UpdateFileList();
 	  void NextPreset();
 	  void PreviousPreset();
 	  std::string GetPresetDescription() const;
@@ -24,7 +24,7 @@ private:
 		juce::File mFile;
 	};
 	
-	void UpdateFileList();
+	
 	void UpdatePresetNamesList();
 	const SRecord* GetPresetByCategoryAndIndex(const std::string& category, int index) const;
 
