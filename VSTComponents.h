@@ -37,6 +37,8 @@
 #include "Owl/VoiceModuleBase.h"
 #include "Owl/VoiceModuleHost.h"
 #include "Owl/VoiceModuleHostSound.h"
+#include "Owl/SynthStateManager.h"
+#include "Owl/ISynthStateManagerListener.h"
 
 #include "OwlUI/IGuiListener.h"
 #include "OwlUI/IIndicator.h"
