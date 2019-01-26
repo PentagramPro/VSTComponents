@@ -170,6 +170,7 @@ void CPresetBrowserImpl::UpdatePresetNamesList()
 	mListPresets->selectRow(-1);
 	mSelectedPresetIndex = -1;
 	mListPresets->updateContent();
+	mListPresets->repaint();
 }
 
 const CPresetBrowserImpl::SRecord* CPresetBrowserImpl::GetPresetByCategoryAndIndex(const std::string & category, int index) const

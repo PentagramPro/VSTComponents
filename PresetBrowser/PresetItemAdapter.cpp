@@ -20,6 +20,7 @@ void CPresetItemAdapter::paintListBoxItem(int rowNumber, Graphics & g, int width
 void CPresetItemAdapter::SetItems(const std::vector<std::string>& itemsList)
 {
 	mItems = itemsList;
+	
 }
 
 std::string CPresetItemAdapter::GetItemAt(int index)
