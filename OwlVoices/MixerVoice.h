@@ -14,6 +14,11 @@ public:
 
     void OnNoteStop(float velocity, bool allowTailOff) override;
 	void AddModule(IVoiceModule* voice);
+	template<class T>
+	T& AddModule(T* module) {
+		AddModule((IVoiceModule*)module);
+		return *module;
+	}
 
 	virtual bool IsBusy() const override;
 
