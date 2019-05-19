@@ -29,7 +29,7 @@ void CLimiterVoice::ProcessBlock(AudioBuffer<float>& outputBuffer, int startSamp
 
 }
 
-CLimiterVoice::CLimiterVoice(const std::string & name, IVoiceModuleHost & host, double preVolume) : CVoiceModuleBase(name, host)
+CLimiterVoice::CLimiterVoice(const std::string & name, IVoiceModuleHost & host, double preVolume) : CVoiceModuleBuffered(name, host)
 , mPreVolume(preVolume)
 {
 	mDelayChannel0.Reset(GetSampleRate(), 0.5);

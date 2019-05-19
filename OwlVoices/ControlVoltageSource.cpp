@@ -3,8 +3,8 @@
 CCVOne CCVOne::instance;
 CCVZero CCVZero::instance;
 
-CControlVoltageSource::CControlVoltageSource(const std::string & name, IVoiceModuleHost & host, std::shared_ptr<CVoiceModuleBase> wrappedVoice, double initialValue)
-	: CVoiceModuleBase(name, host), mWrappedVoice(wrappedVoice), mInitialValue(initialValue)
+CControlVoltageSource::CControlVoltageSource(const std::string & name, IVoiceModuleHost & host, std::shared_ptr<CVoiceModuleBuffered> wrappedVoice, double initialValue)
+	: CVoiceModuleBuffered(name, host), mWrappedVoice(wrappedVoice), mInitialValue(initialValue)
 {
 	mWrappedVoice->ReplaceHost(*this);
 }

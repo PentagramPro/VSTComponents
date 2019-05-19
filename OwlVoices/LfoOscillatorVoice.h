@@ -1,10 +1,10 @@
 
 #pragma once
 #include "JuceHeader.h"
-#include "VSTComponents/Owl/VoiceModuleBase.h"
+#include "VSTComponents/Owl/VoiceModuleBuffered.h"
 #include "VSTComponents/Owl/IVoiceModuleHost.h"
 
-class CLfoOscillatorVoice : public CVoiceModuleBase
+class CLfoOscillatorVoice : public CVoiceModuleBuffered
 {
 public:
 	enum class EWaveform {Sine, Square, Triangle, Sawtooth, RandomSquare};

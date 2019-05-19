@@ -1,12 +1,12 @@
 #pragma once
 #include "JuceHeader.h"
-#include "VSTComponents/Owl/VoiceModuleBase.h"
+#include "VSTComponents/Owl/VoiceModuleBuffered.h"
 #include "VSTComponents/Owl/IVoiceModuleHost.h"
 
-class CNoiseVoice : public CVoiceModuleBase {
+class CNoiseVoice : public CVoiceModuleBuffered {
 public:
 	CNoiseVoice(const std::string& name, IVoiceModuleHost& host)
-		: CVoiceModuleBase(name, host) {}
+		: CVoiceModuleBuffered(name, host) {}
 
 	void OnNoteStart(int midiNoteNumber, float velocity,
 		SynthesiserSound*, int currentPitchWheelPosition) override;

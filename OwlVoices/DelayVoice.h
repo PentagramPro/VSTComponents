@@ -1,13 +1,13 @@
 #pragma once
 #include "JuceHeader.h"
-#include "VSTComponents/Owl/VoiceModuleBase.h"
+#include "VSTComponents/Owl/VoiceModuleBuffered.h"
 #include "VSTComponents/Owl/IVoiceModuleHost.h"
 #include "VSTComponents/Owl/AudioQueue.h"
 #include "IVoltageController.h"
 #include "VSTComponents/OwlDSP/DSPLowpassFilter2.h"
 #include <vector>
 
-class CDelayVoice : public CVoiceModuleBase {
+class CDelayVoice : public CVoiceModuleBuffered {
 public:
 	CDelayVoice(const std::string& name, IVoiceModuleHost& host);
 		

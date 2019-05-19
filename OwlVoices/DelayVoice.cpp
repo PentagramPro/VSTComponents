@@ -3,7 +3,7 @@
 
 const double MaxDelayLength = 2;
 
-CDelayVoice::CDelayVoice(const std::string & name, IVoiceModuleHost & host) : CVoiceModuleBase(name, host)
+CDelayVoice::CDelayVoice(const std::string & name, IVoiceModuleHost & host) : CVoiceModuleBuffered(name, host)
 {
 
 }

@@ -1,6 +1,6 @@
 #pragma once
 #include "JuceHeader.h"
-#include "IVoiceModule.h"
+#include "IVoiceModuleBuffered.h"
 #include "VoiceModuleBase.h"
 #include "IVoiceModuleHost.h"
 
@@ -9,10 +9,10 @@ class CPropertiesRegistry;
 class CVoiceModuleHost : public juce::SynthesiserVoice, public IVoiceModuleHost {
 public:
     CVoiceModuleHost(CPropertiesRegistry& propRegistry);
-    void AddModule(IVoiceModule* module);
+    void AddModule(CVoiceModuleBuffered* module);
 	template<class T>
 	T& AddModule(T* module) {
-		AddModule((IVoiceModule*)module);
+		AddModule((CVoiceModuleBuffered*)module);
 		return *module;
 	}
 
@@ -33,9 +33,9 @@ public:
 
     void SoundEnded() override;
 
-	IVoiceModule* GetVoiceByName(const std::string& name) const ;
+	CVoiceModuleBuffered* GetVoiceByName(const std::string& name) const ;
 
 private:
-    std::vector<std::unique_ptr<IVoiceModule>> mVoiceModules;
+    std::vector<std::unique_ptr<CVoiceModuleBuffered>> mVoiceModules;
 	CPropertiesRegistry & mPropRegistry;
 };

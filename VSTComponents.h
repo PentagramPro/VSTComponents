@@ -27,7 +27,10 @@
 #include "OwlDSP/DSPLowpassFilter2.h"
 
 #include "Owl/AudioQueue.h"
-#include "Owl/IVoiceModule.h"
+#include "Owl/IVoiceModuleBase.h"
+#include "Owl/IVoiceModuleBuffered.h"
+#include "Owl/VoiceModuleBuffered.h"
+#include "Owl/IVoiceModuleRealtime.h"
 #include "Owl/IVoiceModuleHost.h"
 #include "Owl/ListenerHandle.h"
 #include "Owl/ListenerRegistry.h"

@@ -8,7 +8,7 @@ CVoiceModuleHost::CVoiceModuleHost(CPropertiesRegistry& propRegistry) : mPropReg
 
 }
 
-void CVoiceModuleHost::AddModule(IVoiceModule *module) {
+void CVoiceModuleHost::AddModule(CVoiceModuleBuffered* module) {
     mVoiceModules.emplace_back(module);
 	module->InitProperties(mPropRegistry);
 }
@@ -66,9 +66,9 @@ void CVoiceModuleHost::SoundEnded() {
     clearCurrentNote();
 }
 
-IVoiceModule * CVoiceModuleHost::GetVoiceByName(const std::string & name) const
+CVoiceModuleBuffered* CVoiceModuleHost::GetVoiceByName(const std::string & name) const
 {
-	auto res = std::find_if(mVoiceModules.begin(), mVoiceModules.end(), [&](const std::unique_ptr<IVoiceModule>& m) {
+	auto res = std::find_if(mVoiceModules.begin(), mVoiceModules.end(), [&](const std::unique_ptr<CVoiceModuleBuffered>& m) {
 		return m->GetName() == name;
 	});
 

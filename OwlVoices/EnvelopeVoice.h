@@ -1,11 +1,11 @@
 #pragma once
 #include "JuceHeader.h"
-#include "VSTComponents/Owl/VoiceModuleBase.h"
+#include "VSTComponents/Owl/VoiceModuleBuffered.h"
 #include "VSTComponents/Owl/IVoiceModuleHost.h"
 
-class EnvelopeVoice  : public CVoiceModuleBase {
+class EnvelopeVoice  : public CVoiceModuleBuffered {
 public:
-	EnvelopeVoice(const std::string& name, IVoiceModuleHost& host) : CVoiceModuleBase(name, host) {}
+	EnvelopeVoice(const std::string& name, IVoiceModuleHost& host) : CVoiceModuleBuffered(name, host) {}
 
 	void InitProperties(CPropertiesRegistry& registry) override;
     void OnNoteStart(int midiNoteNumber, float velocity, SynthesiserSound *sound, int currentPitchWheelPosition) override;

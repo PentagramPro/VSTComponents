@@ -1,9 +1,9 @@
 #pragma once
 #include "JuceHeader.h"
-#include "VSTComponents/Owl/VoiceModuleBase.h"
+#include "VSTComponents/Owl/VoiceModuleBuffered.h"
 #include "VSTComponents/Owl/IVoiceModuleHost.h"
 #include "VSTComponents/OwlDSP/DSPDelay.h"
-class CLimiterVoice : public CVoiceModuleBase {
+class CLimiterVoice : public CVoiceModuleBuffered {
 public:
 	CLimiterVoice(const std::string& name, IVoiceModuleHost& host, double preVolume);
 

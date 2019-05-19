@@ -1,6 +1,6 @@
 #pragma once
 #include "JuceHeader.h"
-#include "VSTComponents/Owl/VoiceModuleBase.h"
+#include "VSTComponents/Owl/VoiceModuleBuffered.h"
 #include "VSTComponents/Owl/IVoiceModuleHost.h"
 #include "VSTComponents/OwlDSP/DSPLowpassFilter2.h"
 #include "VSTComponents/OwlDSP/DSPDelay.h"
@@ -8,7 +8,7 @@
 #include "ControlVoltageSource.h"
 #include <vector>
 
-class CFilterVoice : public CVoiceModuleBase {
+class CFilterVoice : public CVoiceModuleBuffered {
 public:
 	CFilterVoice(const std::string& name, IVoiceModuleHost& host, IVoltageController& cutoffEnvelope);
 

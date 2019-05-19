@@ -2,7 +2,7 @@
 #include "MixerVoice.h"
 #include "VSTComponents/Owl/ProperiesRegistry.h"
 
-CMixerVoice::CMixerVoice(const std::string& name, IVoiceModuleHost& host) : CVoiceModuleBase(name, host) {
+CMixerVoice::CMixerVoice(const std::string& name, IVoiceModuleHost& host) : CVoiceModuleBuffered(name, host) {
     
 }
 
@@ -21,7 +21,7 @@ void CMixerVoice::OnNoteStop(float velocity, bool allowTailOff) {
     }
 }
 
-void CMixerVoice::AddModule(IVoiceModule * voice)
+void CMixerVoice::AddModule(CVoiceModuleBuffered* voice)
 {
 	mSubvoices.emplace_back(voice);
 }

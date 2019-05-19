@@ -2,7 +2,7 @@
 
 #pragma once
 #include "JuceHeader.h"
-#include "VSTComponents/Owl/VoiceModuleBase.h"
+#include "VSTComponents/Owl/VoiceModuleBuffered.h"
 #include "VSTComponents/Owl/IVoiceModuleHost.h"
 #include "IVoltageController.h"
 class CCVOne : public IVoltageController {
@@ -17,9 +17,9 @@ public:
 	static CCVZero instance;
 };
 
-class CControlVoltageSource : public CVoiceModuleBase, public IVoltageController, public IVoiceModuleHost {
+class CControlVoltageSource : public CVoiceModuleBuffered, public IVoltageController, public IVoiceModuleHost {
 public:
-	CControlVoltageSource(const std::string& name, IVoiceModuleHost& host, std::shared_ptr<CVoiceModuleBase> wrappedVoice, double initialValue);
+	CControlVoltageSource(const std::string& name, IVoiceModuleHost& host, std::shared_ptr<CVoiceModuleBuffered> wrappedVoice, double initialValue);
 	virtual ~CControlVoltageSource();
 	void InitProperties(CPropertiesRegistry& registry) override;
 	void OnNoteStart(int midiNoteNumber, float velocity, SynthesiserSound *sound, int currentPitchWheelPosition) override;
@@ -29,7 +29,7 @@ public:
 	void ProcessBlock(AudioBuffer<float> &outputBuffer, int startSample, int numSamples) override;
 
 private:
-	std::shared_ptr<CVoiceModuleBase> mWrappedVoice;
+	std::shared_ptr<CVoiceModuleBuffered> mWrappedVoice;
 	AudioBuffer<float> mBuffer;
 
 	// Inherited via IVoltageController

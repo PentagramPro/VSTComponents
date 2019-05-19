@@ -3,7 +3,7 @@
 #include "VSTComponents/Owl/ProperiesRegistry.h"
 
 CLfoOscillatorVoice::CLfoOscillatorVoice(const std::string& name, IVoiceModuleHost& host, const std::vector<EWaveform>& waveformMapping)
-		: CVoiceModuleBase(name, host), mWaveformMapping(waveformMapping){
+		: CVoiceModuleBuffered(name, host), mWaveformMapping(waveformMapping){
 	
 }
 

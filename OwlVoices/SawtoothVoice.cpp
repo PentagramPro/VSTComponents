@@ -1,7 +1,7 @@
 #include "SawtoothVoice.h"
 #include "VSTComponents/Owl/ProperiesRegistry.h"
 
-CSawtoothVoice::CSawtoothVoice(const std::string & name, IVoiceModuleHost & host, double detuneScale) : CVoiceModuleBase(name,host)
+CSawtoothVoice::CSawtoothVoice(const std::string & name, IVoiceModuleHost & host, double detuneScale) : CVoiceModuleBuffered(name,host)
 , mDetuneScale(detuneScale)
 {
 	mDelay.Reset(GetSampleRate(), mPortamento);
@@ -41,18 +41,42 @@ void CSawtoothVoice::ProcessBlock(AudioSampleBuffer & outputBuffer, int startSam
 	}
 
 	mDelay.SetTransferTime(mPortamento);
+
+	// === set up modulation ===
+	std::function<double(double)> modulationFunction;
+
+	if (mFrequencyModulator) {
+		modulationFunction = [this](double currentSample) {
+			const double fmVal = mFrequencyModulator->GetValue(currentSample);
+			if (fmVal >= 0)
+				return fmVal + 1;
+			else
+				return 1 / (-fmVal+1);
+		};
+	}
+	else {
+		modulationFunction = [](double currentSample) {
+			return 1;
+		};
+	}
+
+	// === main loop ===
+
 	while (--samplesCount >= 0) {
 		mSampleCounter++;
-		if (mSampleCounter >= mCurrentSamplesPerCycle) {
-			mSampleCounter = mSampleCounter - mCurrentSamplesPerCycle;
+		double samplesPerCycleModulated = mCurrentSamplesPerCycle * modulationFunction(currentSample);
+
+		if (mSampleCounter >= samplesPerCycleModulated) {
+			mSampleCounter = mSampleCounter - samplesPerCycleModulated;
 			mCurrentSamplesPerCycle = mDelay.Next(mNextSamplesPerCycle);
-
-
+			
+			samplesPerCycleModulated = mCurrentSamplesPerCycle * modulationFunction(currentSample);
 		}
 		else {
 			mDelay.Next(mNextSamplesPerCycle);
 		}
-		double value = mSampleCounter / mCurrentSamplesPerCycle;
+
+		double value = mSampleCounter / samplesPerCycleModulated;
 
 		for (auto i = outputBuffer.getNumChannels(); --i >= 0;) {
 			outputBuffer.addSample(i, currentSample, value);

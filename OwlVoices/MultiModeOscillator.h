@@ -1,12 +1,12 @@
 
 #pragma once
 #include "JuceHeader.h"
-#include "VSTComponents/Owl/VoiceModuleBase.h"
+#include "VSTComponents/Owl/VoiceModuleBuffered.h"
 #include "VSTComponents/Owl/IVoiceModuleHost.h"
 #include "IVoltageController.h"
 #include "VSTComponents/OwlDSP/DSPDelay.h"
 
-class CMultiModeOscillator : public CVoiceModuleBase
+class CMultiModeOscillator : public CVoiceModuleBuffered
 {
 public:
 	CMultiModeOscillator(const std::string& name, IVoiceModuleHost& host, IVoltageController& referenceSawtooth, double pan);

@@ -1,7 +1,7 @@
 #include "MultiModeOscillator.h"
 #include "VSTComponents/Owl/ProperiesRegistry.h"
 
-CMultiModeOscillator::CMultiModeOscillator(const std::string & name, IVoiceModuleHost & host, IVoltageController & referenceSawtooth, double pan) : CVoiceModuleBase(name,host)
+CMultiModeOscillator::CMultiModeOscillator(const std::string & name, IVoiceModuleHost & host, IVoltageController & referenceSawtooth, double pan) : CVoiceModuleBuffered(name,host)
 , mReferenceSawtooth(referenceSawtooth), mPan(pan)
 {
 }

@@ -1,10 +1,10 @@
 #pragma once
 #include "JuceHeader.h"
 #include <vector>
-#include "VSTComponents/Owl/VoiceModuleBase.h"
+#include "VSTComponents/Owl/VoiceModuleBuffered.h"
 #include "VSTComponents/Owl/IVoiceModuleHost.h"
 
-class CMixerVoice : public CVoiceModuleBase {
+class CMixerVoice : public CVoiceModuleBuffered {
 
 public:
     CMixerVoice(const std::string& name, IVoiceModuleHost& host);
@@ -13,10 +13,10 @@ public:
             SynthesiserSound* sound, int currentPitchWheelPosition) override;
 
     void OnNoteStop(float velocity, bool allowTailOff) override;
-	void AddModule(IVoiceModule* voice);
+	void AddModule(CVoiceModuleBuffered* voice);
 	template<class T>
 	T& AddModule(T* module) {
-		AddModule((IVoiceModule*)module);
+		AddModule((CVoiceModuleBuffered*)module);
 		return *module;
 	}
 
@@ -24,7 +24,7 @@ public:
 
     void ProcessBlock(AudioSampleBuffer& outputBuffer, int startSample, int numSamples) override;
 private:
-    std::vector<std::unique_ptr<IVoiceModule>> mSubvoices;
+    std::vector<std::unique_ptr<CVoiceModuleBuffered>> mSubvoices;
 	AudioBuffer<float> mBuffer;
 
 	// Inherited via CVoiceModuleBase

@@ -37,10 +37,3 @@ std::string CVoiceModuleBase::GetPropName(const std::string & propertyName) cons
 	  return false;
   }
 
-  void CVoiceModuleBase::ProcessBlockOfSound(juce::AudioSampleBuffer & outputBuffer, int startSample, int numSamples)
-  {
-	  if (IsMute()) {
-		  return;
-	  }
-	  ProcessBlock(outputBuffer, startSample, numSamples);
-  }

@@ -1,11 +1,11 @@
 
 #pragma once
 #include "JuceHeader.h"
-#include "VSTComponents/Owl/VoiceModuleBase.h"
+#include "VSTComponents/Owl/VoiceModuleBuffered.h"
 #include "VSTComponents/Owl/IVoiceModuleHost.h"
 #include "VSTComponents/OwlDSP/DSPDelay.h"
 
-class CSawtoothVoice : public CVoiceModuleBase
+class CSawtoothVoice : public CVoiceModuleBuffered
 {
 public:
 	CSawtoothVoice(const std::string& name, IVoiceModuleHost& host, double detuneScale);
@@ -19,6 +19,8 @@ public:
 
 	// used to directly control frequency in LFO
 	void SetSamplesPerCycle(int samples);
+
+	void SetFrequencyModulator(IVoltageController* fm) { mFrequencyModulator = fm; }
 private:
 	virtual void InitProperties(CPropertiesRegistry & registry) override;
 
@@ -29,7 +31,7 @@ private:
 	double mPortamento = 0.005;
 	const double mDetuneScale = 1;
 	CDSPDelay mDelay;
-
+	IVoltageController* mFrequencyModulator = nullptr;
 	// Inherited via CVoiceModuleBase
 
 };

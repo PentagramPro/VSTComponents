@@ -4,7 +4,7 @@
 
 #include <cmath>
 CFilterVoice::CFilterVoice(const std::string & name, IVoiceModuleHost & host, IVoltageController& cutoffEnvelope)
-	: CVoiceModuleBase(name, host)
+	: CVoiceModuleBuffered(name, host)
 	, mCutoffEnvelope(cutoffEnvelope)
 {
 	
