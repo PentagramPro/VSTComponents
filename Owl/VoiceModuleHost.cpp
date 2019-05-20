@@ -9,7 +9,7 @@ CVoiceModuleHost::CVoiceModuleHost(CPropertiesRegistry& propRegistry) : mPropReg
 }
 
 void CVoiceModuleHost::AddModule(CVoiceModuleBuffered* module) {
-    mVoiceModules.emplace_back(module);
+    CModuleRegistry::AddModule(module);
 	module->InitProperties(mPropRegistry);
 }
 
@@ -23,32 +23,32 @@ bool CVoiceModuleHost::canPlaySound(SynthesiserSound *sound) {
 
 void CVoiceModuleHost::startNote(int midiNoteNumber, float velocity, SynthesiserSound *sound, int currentPitchWheelPosition) {
 	DBG("= New note " << midiNoteNumber << " (" << MidiMessage::getMidiNoteInHertz(midiNoteNumber) << ") =");
-    for(auto& voice : mVoiceModules) {
+    for(auto& voice : GetModules()) {
         voice->OnNoteStart(midiNoteNumber, velocity, sound, currentPitchWheelPosition);
     }
 }
 
 void CVoiceModuleHost::stopNote(float velocity, bool allowTailOff) {
-    for(auto& voice : mVoiceModules) {
+    for(auto& voice : GetModules()) {
         voice->OnNoteStop(velocity, allowTailOff);
     }
 }
 
 void CVoiceModuleHost::pitchWheelMoved(int newPitchWheelValue) {
-    for(auto& voice : mVoiceModules) {
+    for(auto& voice : GetModules()) {
 
     }
 }
 
 void CVoiceModuleHost::controllerMoved(int controllerNumber, int newControllerValue) {
-    for(auto& voice : mVoiceModules) {
+    for(auto& voice : GetModules()) {
 
     }
 }
 
 void CVoiceModuleHost::renderNextBlock(AudioSampleBuffer &outputBuffer, int startSample, int numSamples) {
 	
-    for(auto& voice : mVoiceModules) {
+    for(auto& voice : GetModules()) {
         voice->ProcessBlockOfSound(outputBuffer, startSample, numSamples);
     }
 }
@@ -58,7 +58,7 @@ double CVoiceModuleHost::GetSampleRate() const {
 }
 
 void CVoiceModuleHost::SoundEnded() {
-	for (auto& voice : mVoiceModules) {
+	for (auto& voice : GetModules()) {
 		if (voice->IsBusy()) {
 			return;
 		}
@@ -68,11 +68,11 @@ void CVoiceModuleHost::SoundEnded() {
 
 CVoiceModuleBuffered* CVoiceModuleHost::GetVoiceByName(const std::string & name) const
 {
-	auto res = std::find_if(mVoiceModules.begin(), mVoiceModules.end(), [&](const std::unique_ptr<CVoiceModuleBuffered>& m) {
+	auto res = std::find_if(GetModules().begin(), GetModules().end(), [&](const std::unique_ptr<CVoiceModuleBuffered>& m) {
 		return m->GetName() == name;
 	});
 
-	if (res == mVoiceModules.end()) {
+	if (res == GetModules().end()) {
 		return nullptr;
 	}
 	return res->get();

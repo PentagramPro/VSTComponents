@@ -10,25 +10,21 @@ CMixerVoice::CMixerVoice(const std::string& name, IVoiceModuleHost& host) : CVoi
 
 
 void CMixerVoice::OnNoteStart(int midiNoteNumber, float velocity, SynthesiserSound *sound, int currentPitchWheelPosition) {
-    for(auto& voice : mSubvoices) {
+    for(auto& voice : GetModules()) {
         voice->OnNoteStart(midiNoteNumber, velocity, sound, currentPitchWheelPosition);
     }
 }
 
 void CMixerVoice::OnNoteStop(float velocity, bool allowTailOff) {
-    for(auto& voice : mSubvoices) {
+    for(auto& voice : GetModules()) {
         voice->OnNoteStop(velocity,allowTailOff);
     }
 }
 
-void CMixerVoice::AddModule(CVoiceModuleBuffered* voice)
-{
-	mSubvoices.emplace_back(voice);
-}
 
 bool CMixerVoice::IsBusy() const
 {
-	for (const auto& voice : mSubvoices) {
+	for (const auto& voice : GetModules()) {
 		if (voice->IsBusy()) {
 			return true;
 		}
@@ -42,7 +38,7 @@ void CMixerVoice::ProcessBlock(AudioSampleBuffer &outputBuffer, int startSample,
 	mBuffer.setSize(outputBuffer.getNumChannels(), outputBuffer.getNumSamples(), false, false, true);
 	mBuffer.clear();
 
-    for(auto& voice : mSubvoices) {
+    for(auto& voice : GetModules()) {
         voice->ProcessBlockOfSound(mBuffer, startSample, numSamples);
     }
 	
@@ -58,7 +54,7 @@ void CMixerVoice::ProcessBlock(AudioSampleBuffer &outputBuffer, int startSample,
 void CMixerVoice::InitProperties(CPropertiesRegistry & registry)
 {
 	registry.AddProperty(GetPropName("Volume"), new CPropertyDouble01(mVolume, 0, 1));
-	for (auto& voice : mSubvoices) {
+	for (auto& voice : GetModules()) {
 		voice->InitProperties(registry);
 	}
 }

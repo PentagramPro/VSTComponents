@@ -4,17 +4,15 @@
 #include "VoiceModuleBase.h"
 #include "IVoiceModuleHost.h"
 
+#include "ModuleRegistry.h"
+
 class CPropertiesRegistry;
 
-class CVoiceModuleHost : public juce::SynthesiserVoice, public IVoiceModuleHost {
+class CVoiceModuleHost : public juce::SynthesiserVoice, public IVoiceModuleHost, public CModuleRegistry<CVoiceModuleBuffered> {
 public:
     CVoiceModuleHost(CPropertiesRegistry& propRegistry);
-    void AddModule(CVoiceModuleBuffered* module);
-	template<class T>
-	T& AddModule(T* module) {
-		AddModule((CVoiceModuleBuffered*)module);
-		return *module;
-	}
+    
+	virtual void AddModule(CVoiceModuleBuffered* voice) override;
 
     bool canPlaySound(juce::SynthesiserSound* sound) override;
 
@@ -36,6 +34,6 @@ public:
 	CVoiceModuleBuffered* GetVoiceByName(const std::string& name) const ;
 
 private:
-    std::vector<std::unique_ptr<CVoiceModuleBuffered>> mVoiceModules;
+    
 	CPropertiesRegistry & mPropRegistry;
 };
