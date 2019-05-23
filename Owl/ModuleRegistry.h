@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 
+
 template<class T>
 class CModuleRegistry {
 public:
@@ -11,6 +12,8 @@ public:
 	}
 	template<class M>
 	M& AddModule(M* module) {
+
+		static_assert(std::is_base_of<T, M>::value);
 		AddModule((T*)module);
 		return *module;
 	}
