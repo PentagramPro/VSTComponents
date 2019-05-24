@@ -5,6 +5,8 @@
 #include "VSTComponents/Owl/VoiceModuleBuffered.h"
 #include "VSTComponents/Owl/IVoiceModuleHost.h"
 #include "IVoltageController.h"
+
+
 class CCVOne : public IVoltageController {
 public:
 	inline virtual float GetValue(int sampleNumber) const override { return 1; }
@@ -17,7 +19,8 @@ public:
 	static CCVZero instance;
 };
 
-class CControlVoltageSource : public CVoiceModuleBuffered, public IVoltageController, public IVoiceModuleHost {
+class CControlVoltageSource : public CVoiceModuleBuffered, public IVoltageController,
+		public IVoiceModuleHost {
 public:
 	CControlVoltageSource(const std::string& name, IVoiceModuleHost& host, std::shared_ptr<CVoiceModuleBuffered> wrappedVoice, double initialValue);
 	virtual ~CControlVoltageSource();

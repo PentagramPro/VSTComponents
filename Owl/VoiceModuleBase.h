@@ -13,7 +13,7 @@ public:
 	const std::string& GetName() const override { return mName; }
 	virtual bool IsBusy() const override { return  mIsBusy; }
 
-	void ReplaceHost(IVoiceModuleHost& host) { mHost = &host; }
+	void ReplaceHost(IVoiceModuleHost& host) override { mHost = &host; }
 
 	using MutePredicate = std::function<bool(const IVoiceModuleBase& m)>;
 	void AddMuteRule(MutePredicate predicate);
