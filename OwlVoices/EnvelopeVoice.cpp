@@ -42,51 +42,52 @@ void EnvelopeVoice::OnNoteStop(float velocity, bool allowTailOff) {
 void EnvelopeVoice::ProcessBlock(AudioBuffer<float> &outputBuffer, int startSample, int numSamples) {
     int samplesCount = numSamples;
     int currentSample = startSample;
-	const bool hasDecay = mDecayTime > MinDecay;
-	const double maxAttack = hasDecay ? MaxVolume : mSustainLevel;
 
-	const double attackSamples = maxAttack / (GetSampleRate()*mAttackTime);
-	
-	const double decaySamples = hasDecay ? (maxAttack-mSustainLevel) / (GetSampleRate()*mDecayTime) : 0;
+	OnNextDataBuffer(outputBuffer.getNumChannels());
 
     while (--samplesCount >= 0){
 
-
-        if(mState == EState::Attack) {
-            mSoundLevel+= attackSamples;
-			if (mSoundLevel > maxAttack) {
-				mSoundLevel = maxAttack;
-				mState = hasDecay ? EState::Decay : EState::Sustain;
-			}
+        for (auto i = outputBuffer.getNumChannels(); --i >= 0;) {
+			ProcessSample(i, *outputBuffer.getWritePointer(i, currentSample), currentSample);
         }
-		else if (mState == EState::Decay) {
-			mSoundLevel -= decaySamples;
+        currentSample++;
+    }
+}
+
+void EnvelopeVoice::ProcessSample(int channel, float& sample, int sampleNumber){
+	if(channel==0) {
+		if (mState == EState::Attack) {
+			mSoundLevel += mContext.attackSamples;
+			if (mSoundLevel > mContext.maxAttack) {
+				mSoundLevel = mContext.maxAttack;
+				mState = mContext.hasDecay ? EState::Decay : EState::Sustain;
+			}
+		} else if (mState == EState::Decay) {
+			mSoundLevel -= mContext.decaySamples;
 			if (mSoundLevel < mSustainLevel) {
 				mSoundLevel = mSustainLevel;
 				mState = EState::Sustain;
 			}
-		}
-		else if (mState == EState::Release) {
+		} else if (mState == EState::Release) {
 			mSoundLevel -= mReleaseStep;
 			if (mSoundLevel <= 0) {
 				mSoundLevel = 0;
 				mState = EState::Idle;
 				StopSound();
 			}
-		}
-		else if (mState == EState::Idle) {
+		} else if (mState == EState::Idle) {
 			mSoundLevel = 0;
+		} else {
+			mSoundLevel = mSustainLevel;
 		}
-        else {
-            mSoundLevel = mSustainLevel;
-        }
-		
+	}
+	sample*=mSoundLevel;
+}
+void EnvelopeVoice::OnNextDataBuffer(int channelNum) {
+	mContext.hasDecay = mDecayTime > MinDecay;
+	mContext.maxAttack = mContext.hasDecay ? MaxVolume : mSustainLevel;
+	mContext.attackSamples = mContext.maxAttack / (GetSampleRate()*mAttackTime);
+	mContext.decaySamples = mContext.hasDecay ? (mContext.maxAttack-mSustainLevel) / (GetSampleRate()*mDecayTime) : 0;
 
-        for (auto i = outputBuffer.getNumChannels(); --i >= 0;) {
-            const double scaledSampleValue = outputBuffer.getSample(i, currentSample)*mSoundLevel;
-            outputBuffer.setSample(i, currentSample, scaledSampleValue);
-        }
-        currentSample++;
-    }
 }
 

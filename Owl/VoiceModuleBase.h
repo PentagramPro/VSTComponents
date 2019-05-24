@@ -1,5 +1,7 @@
 #pragma once
 #include "IVoiceModuleBase.h"
+#include <functional>
+#include <vector>
 
 class IVoiceModuleHost;
 
@@ -15,7 +17,7 @@ public:
 
 	using MutePredicate = std::function<bool(const IVoiceModuleBase& m)>;
 	void AddMuteRule(MutePredicate predicate);
-	bool IsMute() const;
+	bool IsMute() const override;
 
 protected:
 	

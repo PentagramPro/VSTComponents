@@ -1,9 +1,12 @@
 #pragma once
 #include "JuceHeader.h"
 #include "VSTComponents/Owl/VoiceModuleBuffered.h"
-#include "VSTComponents/Owl/IVoiceModuleHost.h"
+#include "VSTComponents/Owl/IVoiceModuleRealtime.h"
 
-class EnvelopeVoice  : public CVoiceModuleBuffered {
+class IVoiceModuleHost;
+
+
+class EnvelopeVoice  : public CVoiceModuleBuffered, public IVoiceModuleRealtime {
 public:
 	EnvelopeVoice(const std::string& name, IVoiceModuleHost& host) : CVoiceModuleBuffered(name, host) {}
 
@@ -14,8 +17,19 @@ public:
 
     void ProcessBlock(AudioBuffer<float> &outputBuffer, int startSample, int numSamples) override;
 
+	virtual void ProcessSample(int channel, float& sample, int sampleNumber) override;
+	virtual void OnNextDataBuffer(int channelNum) override;
+	virtual IVoiceModuleBase& GetBase() override {return *this;}
+
 private:
     enum class EState {Idle, Attack, Decay, Sustain, Release};
+	struct SContext{
+		bool hasDecay;
+		double maxAttack;
+		double attackSamples;
+		double decaySamples;
+	};
+
     double mAttackTime = 1;
 	double mDecayTime = 0;
 	double mReleaseTime = 1;
@@ -25,6 +39,7 @@ private:
 
 	double mReleaseStep = 1;
     EState mState = EState ::Idle;
+    SContext mContext;
 };
 
 

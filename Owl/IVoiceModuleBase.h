@@ -1,6 +1,10 @@
 #pragma once
-#include "JuceHeader.h"
+#include <string>
+
 class CPropertiesRegistry;
+namespace juce {
+    class SynthesiserSound;
+}
 
 
 class IVoiceModuleBase {
@@ -12,4 +16,5 @@ public:
 		juce::SynthesiserSound* sound, int currentPitchWheelPosition) = 0;
 	virtual void OnNoteStop(float velocity, bool allowTailOff) = 0;
 	virtual bool IsBusy() const = 0;
+	virtual bool IsMute() const = 0;
 };

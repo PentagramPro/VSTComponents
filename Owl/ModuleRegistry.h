@@ -7,6 +7,8 @@
 template<class T>
 class CModuleRegistry {
 public:
+	virtual ~CModuleRegistry() {}
+
 	virtual void AddModule(T* voice) {
 		mModules.emplace_back(voice);
 	}
