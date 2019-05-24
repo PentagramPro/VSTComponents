@@ -40,13 +40,46 @@ void CSawtoothVoice::ProcessBlock(AudioSampleBuffer & outputBuffer, int startSam
 		return;
 	}
 
+	OnNextDataBuffer(outputBuffer.getNumChannels(), outputBuffer.getNumSamples());
+
+
+	// === main loop ===
+
+	while (--samplesCount >= 0) {
+
+
+		for (auto i = outputBuffer.getNumChannels(); --i >= 0;) {
+			ProcessSample(i, *outputBuffer.getWritePointer(i, currentSample), currentSample);
+		}
+		currentSample++;
+	}
+}
+
+void CSawtoothVoice::ProcessSample(int channel, float& sample, int sampleNumber){
+	if(channel==0) {
+		mSampleCounter++;
+		double samplesPerCycleModulated = mCurrentSamplesPerCycle * mContext.modulationFunction(sampleNumber);
+
+		if (mSampleCounter >= samplesPerCycleModulated) {
+			mSampleCounter = mSampleCounter - samplesPerCycleModulated;
+			mCurrentSamplesPerCycle = mDelay.Next(mNextSamplesPerCycle);
+
+			samplesPerCycleModulated = mCurrentSamplesPerCycle * mContext.modulationFunction(sampleNumber);
+		} else {
+			mDelay.Next(mNextSamplesPerCycle);
+		}
+
+		mContext.lastValue = static_cast<float>(mSampleCounter / samplesPerCycleModulated);
+	}
+
+	sample = mContext.lastValue;
+}
+
+void CSawtoothVoice::OnNextDataBuffer(int channelNum, int samplesCount){
 	mDelay.SetTransferTime(mPortamento);
 
-	// === set up modulation ===
-	std::function<double(double)> modulationFunction;
-
 	if (mFrequencyModulator) {
-		modulationFunction = [this](double currentSample) {
+		mContext.modulationFunction = [this](double currentSample) {
 			const double fmVal = mFrequencyModulator->GetValue(currentSample);
 			if (fmVal >= 0)
 				return fmVal + 1;
@@ -55,36 +88,11 @@ void CSawtoothVoice::ProcessBlock(AudioSampleBuffer & outputBuffer, int startSam
 		};
 	}
 	else {
-		modulationFunction = [](double currentSample) {
+		mContext.modulationFunction = [](double currentSample) {
 			return 1;
 		};
 	}
-
-	// === main loop ===
-
-	while (--samplesCount >= 0) {
-		mSampleCounter++;
-		double samplesPerCycleModulated = mCurrentSamplesPerCycle * modulationFunction(currentSample);
-
-		if (mSampleCounter >= samplesPerCycleModulated) {
-			mSampleCounter = mSampleCounter - samplesPerCycleModulated;
-			mCurrentSamplesPerCycle = mDelay.Next(mNextSamplesPerCycle);
-			
-			samplesPerCycleModulated = mCurrentSamplesPerCycle * modulationFunction(currentSample);
-		}
-		else {
-			mDelay.Next(mNextSamplesPerCycle);
-		}
-
-		double value = mSampleCounter / samplesPerCycleModulated;
-
-		for (auto i = outputBuffer.getNumChannels(); --i >= 0;) {
-			outputBuffer.addSample(i, currentSample, value);
-		}
-		currentSample++;
-	}
 }
-
 
 void CSawtoothVoice::InitProperties(CPropertiesRegistry & registry)
 {

@@ -43,7 +43,7 @@ void EnvelopeVoice::ProcessBlock(AudioBuffer<float> &outputBuffer, int startSamp
     int samplesCount = numSamples;
     int currentSample = startSample;
 
-	OnNextDataBuffer(outputBuffer.getNumChannels());
+	OnNextDataBuffer(outputBuffer.getNumChannels(), outputBuffer.getNumSamples());
 
     while (--samplesCount >= 0){
 
@@ -83,7 +83,7 @@ void EnvelopeVoice::ProcessSample(int channel, float& sample, int sampleNumber){
 	}
 	sample*=mSoundLevel;
 }
-void EnvelopeVoice::OnNextDataBuffer(int channelNum) {
+void EnvelopeVoice::OnNextDataBuffer(int channelNum, int samplesCount) {
 	mContext.hasDecay = mDecayTime > MinDecay;
 	mContext.maxAttack = mContext.hasDecay ? MaxVolume : mSustainLevel;
 	mContext.attackSamples = mContext.maxAttack / (GetSampleRate()*mAttackTime);

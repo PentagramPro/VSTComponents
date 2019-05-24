@@ -18,7 +18,7 @@ public:
     void ProcessBlock(AudioBuffer<float> &outputBuffer, int startSample, int numSamples) override;
 
 	virtual void ProcessSample(int channel, float& sample, int sampleNumber) override;
-	virtual void OnNextDataBuffer(int channelNum) override;
+	virtual void OnNextDataBuffer(int channelNum, int samplesCount) override;
 	virtual IVoiceModuleBase& GetBase() override {return *this;}
 
 private:
