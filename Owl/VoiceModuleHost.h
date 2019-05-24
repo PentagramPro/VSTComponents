@@ -13,19 +13,8 @@ public:
     CVoiceModuleHost(CPropertiesRegistry& propRegistry);
     
 	virtual void AddModule(CVoiceModuleBuffered* voice) override;
-
-    bool canPlaySound(juce::SynthesiserSound* sound) override;
-
-    void startNote(int midiNoteNumber, float velocity,
-		juce::SynthesiserSound* sound, int currentPitchWheelPosition) override;
-
-    void stopNote(float velocity, bool allowTailOff) override;
-
-    void pitchWheelMoved(int newPitchWheelValue) override;
-    void controllerMoved(int controllerNumber, int newControllerValue) override;
-
-    void renderNextBlock(juce::AudioSampleBuffer& outputBuffer, int startSample, int numSamples) override;
-
+	void InitVoices();
+    
 
     double GetSampleRate() const override;
 
@@ -34,6 +23,17 @@ public:
 	CVoiceModuleBuffered* GetVoiceByName(const std::string& name) const ;
 
 private:
-    
+	bool canPlaySound(juce::SynthesiserSound* sound) override;
+
+	void startNote(int midiNoteNumber, float velocity,
+		juce::SynthesiserSound* sound, int currentPitchWheelPosition) override;
+
+	void stopNote(float velocity, bool allowTailOff) override;
+
+	void pitchWheelMoved(int newPitchWheelValue) override;
+	void controllerMoved(int controllerNumber, int newControllerValue) override;
+
+	void renderNextBlock(juce::AudioSampleBuffer& outputBuffer, int startSample, int numSamples) override;
+
 	CPropertiesRegistry & mPropRegistry;
 };

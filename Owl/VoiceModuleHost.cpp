@@ -2,7 +2,9 @@
 
 #include "VoiceModuleHost.h"
 #include "VoiceModuleHostSound.h"
+
 #include <string>
+#include <chrono>
 
 CVoiceModuleHost::CVoiceModuleHost(CPropertiesRegistry& propRegistry) : mPropRegistry(propRegistry) {
 
@@ -10,7 +12,13 @@ CVoiceModuleHost::CVoiceModuleHost(CPropertiesRegistry& propRegistry) : mPropReg
 
 void CVoiceModuleHost::AddModule(CVoiceModuleBuffered* module) {
     CModuleRegistry::AddModule(module);
-	module->InitProperties(mPropRegistry);
+}
+
+void CVoiceModuleHost::InitVoices()
+{
+	for (auto& voice : GetModules()) {
+		voice->InitProperties(mPropRegistry);
+	}
 }
 
 
@@ -47,10 +55,15 @@ void CVoiceModuleHost::controllerMoved(int controllerNumber, int newControllerVa
 }
 
 void CVoiceModuleHost::renderNextBlock(AudioSampleBuffer &outputBuffer, int startSample, int numSamples) {
-	
+	auto start = std::chrono::high_resolution_clock::now();
+
     for(auto& voice : GetModules()) {
         voice->ProcessBlockOfSound(outputBuffer, startSample, numSamples);
     }
+
+	std::chrono::duration<double> elapsed = std::chrono::high_resolution_clock::now() - start;
+
+	DBG("Block render duration: " << elapsed.count());
 }
 
 double CVoiceModuleHost::GetSampleRate() const {
