@@ -36,4 +36,5 @@ private:
 	void renderNextBlock(juce::AudioSampleBuffer& outputBuffer, int startSample, int numSamples) override;
 
 	CPropertiesRegistry & mPropRegistry;
+	int mDebugInfoCounter = 0;
 };

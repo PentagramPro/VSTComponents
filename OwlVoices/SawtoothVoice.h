@@ -9,7 +9,7 @@
 class CSawtoothVoice : public CVoiceModuleBuffered, public IVoiceModuleRealtime
 {
 public:
-	CSawtoothVoice(const std::string& name, IVoiceModuleHost& host, double detuneScale);
+	CSawtoothVoice(const std::string& name, IVoiceModuleHost& host, double detuneScale, bool retrigger = false);
 
 	void OnNoteStart(int midiNoteNumber, float velocity,
 		SynthesiserSound*, int currentPitchWheelPosition) override;
@@ -38,6 +38,7 @@ private:
 	double mSampleCounter = 0;
 	double mDetune = 1;
 	double mPortamento = 0.005;
+	bool mRetrigger = false;
 	const double mDetuneScale = 1;
 	CDSPDelay mDelay;
 	IVoltageController* mFrequencyModulator = nullptr;

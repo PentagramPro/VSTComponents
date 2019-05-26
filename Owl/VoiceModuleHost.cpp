@@ -63,7 +63,11 @@ void CVoiceModuleHost::renderNextBlock(AudioSampleBuffer &outputBuffer, int star
 
 	std::chrono::duration<double> elapsed = std::chrono::high_resolution_clock::now() - start;
 
-	DBG("Block render duration: " << elapsed.count());
+	if (mDebugInfoCounter++ > 100) {
+		mDebugInfoCounter = 0;
+		DBG("Block render duration: " << elapsed.count() << ", max volume: " << outputBuffer.getMagnitude(startSample,numSamples));
+		
+	}
 }
 
 double CVoiceModuleHost::GetSampleRate() const {

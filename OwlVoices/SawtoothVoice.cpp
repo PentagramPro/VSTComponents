@@ -1,8 +1,8 @@
 #include "SawtoothVoice.h"
 #include "VSTComponents/Owl/ProperiesRegistry.h"
 
-CSawtoothVoice::CSawtoothVoice(const std::string & name, IVoiceModuleHost & host, double detuneScale) : CVoiceModuleBuffered(name,host)
-, mDetuneScale(detuneScale)
+CSawtoothVoice::CSawtoothVoice(const std::string & name, IVoiceModuleHost & host, double detuneScale, bool retrigger) : CVoiceModuleBuffered(name,host)
+, mDetuneScale(detuneScale), mRetrigger(retrigger)
 {
 	mDelay.Reset(GetSampleRate(), mPortamento);
 }
@@ -22,7 +22,9 @@ void CSawtoothVoice::OnNoteStart(int midiNoteNumber, float velocity, Synthesiser
 	auto cyclesPerSecond = MidiMessage::getMidiNoteInHertz(midiNoteNumber)*detune;
 	DBG("Sawtooth voice cycles per second: " << cyclesPerSecond);
 	SetSamplesPerCycle(GetSampleRate() / cyclesPerSecond);
-
+	if (mRetrigger) {
+		mSampleCounter = 0;
+	}
 	StartSound();
 }
 
