@@ -43,6 +43,7 @@
 #include "Owl/SynthStateManager.h"
 #include "Owl/ISynthStateManagerListener.h"
 #include "Owl/ModuleRegistry.h"
+#include "Owl/IPluginProcessor.h"
 
 #include "OwlUI/IGuiListener.h"
 #include "OwlUI/IIndicator.h"
