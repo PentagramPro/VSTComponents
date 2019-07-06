@@ -82,7 +82,7 @@ void CVoiceModuleHost::SoundEnded() {
 	}
     clearCurrentNote();
 }
-
+/*
 CVoiceModuleBuffered* CVoiceModuleHost::GetVoiceByName(const std::string & name) const
 {
 	auto res = std::find_if(GetModules().begin(), GetModules().end(), [&](const std::unique_ptr<CVoiceModuleBuffered>& m) {
@@ -94,3 +94,4 @@ CVoiceModuleBuffered* CVoiceModuleHost::GetVoiceByName(const std::string & name)
 	}
 	return res->get();
 }
+*/

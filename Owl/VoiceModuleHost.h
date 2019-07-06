@@ -20,7 +20,7 @@ public:
 
     void SoundEnded() override;
 
-	CVoiceModuleBuffered* GetVoiceByName(const std::string& name) const ;
+	//CVoiceModuleBuffered* GetVoiceByName(const std::string& name) const ;
 
 private:
 	bool canPlaySound(juce::SynthesiserSound* sound) override;
