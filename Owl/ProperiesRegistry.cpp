@@ -16,6 +16,13 @@ void CPropertiesRegistry::AddProperty(const std::string & name, IPropertyRecord 
 	
 }
 
+void CPropertiesRegistry::ForEachProperty(const std::function<void(const std::string&, float)>& callback)
+{
+	for (auto& keyValue : mProperties) {
+		callback(keyValue.first, keyValue.second->GetFromReference());
+	}
+}
+
 bool CPropertiesRegistry::HasProperty(const std::string & name) const
 {
 	auto p = mProperties.find(name);

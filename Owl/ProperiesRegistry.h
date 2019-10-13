@@ -173,7 +173,7 @@ public:
 
 	
 	void AddProperty(const std::string & name, IPropertyRecord* prop, bool storeOnDisk = true);
-
+	void ForEachProperty(const std::function <void(const std::string&, float)>& callback);
 
 	bool HasProperty(const std::string & name) const;
 private:
