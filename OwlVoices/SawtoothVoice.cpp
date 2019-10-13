@@ -59,19 +59,17 @@ void CSawtoothVoice::ProcessBlock(AudioSampleBuffer & outputBuffer, int startSam
 
 void CSawtoothVoice::ProcessSample(int channel, float& sample, int sampleNumber){
 	if(channel==0) {
-		mSampleCounter++;
-		double samplesPerCycleModulated = mCurrentSamplesPerCycle * mContext.modulationFunction(sampleNumber);
+		mSampleCounter+= mContext.modulationFunction(sampleNumber);
+		
 
-		if (mSampleCounter >= samplesPerCycleModulated) {
-			mSampleCounter = mSampleCounter - samplesPerCycleModulated;
+		if (mSampleCounter >= mCurrentSamplesPerCycle) {
+			mSampleCounter = mSampleCounter - mCurrentSamplesPerCycle;
 			mCurrentSamplesPerCycle = mDelay.Next(mNextSamplesPerCycle);
-
-			samplesPerCycleModulated = mCurrentSamplesPerCycle * mContext.modulationFunction(sampleNumber);
 		} else {
 			mDelay.Next(mNextSamplesPerCycle);
 		}
 
-		mContext.lastValue = static_cast<float>(mSampleCounter / samplesPerCycleModulated);
+		mContext.lastValue = static_cast<float>(mSampleCounter / mCurrentSamplesPerCycle);
 	}
 
 	sample = mContext.lastValue;
